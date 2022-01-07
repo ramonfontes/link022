@@ -35,7 +35,6 @@ const (
 driver=nl80211
 hw_mode=%s
 channel=%d
-ssid=%s
 ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
 `
@@ -47,10 +46,10 @@ ctrl_interface_group=0
 //bss=%s_%d
 //`
 
-//	wlanConfigTemplate = `ssid=%s
-//bridge=%s
-//ap_isolate=%d
-//`
+	wlanConfigTemplate = `ssid=%s
+bridge=%s
+ap_isolate=%d
+`
 
 /*	authConfigTemplate = `ieee8021x=1
 auth_algs=1
@@ -132,15 +131,15 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 	hostapdConfig += commonConfig
 
 	// Generate wlan configuration.
-	/*for i, wlanConfig := range wlanConfigs {
+	for i, wlanConfig := range wlanConfigs {
 		wlanName := *wlanConfig.Name
 		log.Infof("Adding hostapd configuration for WLAN %v...", wlanName)
 
-		//if i > 0 {
-		//	// Add BSS configuration.
+		if i > 0 {
+			// Add BSS configuration.
 		//	bssConfig := fmt.Sprintf(bssConfigTemplate, wlanINTFName, i)
 		//	hostapdConfig += bssConfig
-		//}
+		}
 
 		// Add WLAN configuration.
 		wlanBridgeName := getBridgeName(int(*wlanConfig.DefaultVlan))
@@ -150,8 +149,8 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 			wlanStationIsolation = 1
 		}
 
-		//hostapdWLANConfig := fmt.Sprintf(wlanConfigTemplate, wlanName, wlanBridgeName, wlanStationIsolation)
-		//hostapdConfig += hostapdWLANConfig
+		hostapdWLANConfig := fmt.Sprintf(wlanConfigTemplate, wlanName, wlanBridgeName, wlanStationIsolation)
+		hostapdConfig += hostapdWLANConfig
 
 		// Add AUTH configuration.
 		//if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
@@ -165,7 +164,7 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 			//hostapdConfig += authConfig
 		//}
 		// TODO: Add validation to block WPA2_PERSONAL.
-	}*/
+	}
 
 	log.Info("Generated hostapd configuration.")
 	return hostapdConfig
