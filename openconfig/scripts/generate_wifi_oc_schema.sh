@@ -20,26 +20,30 @@
 # To use this, run thr scripts directory:
 #    ./generate_wifi_oc_schema.sh
 
+export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 
 # Tools
-YANG_CONVERTER=$GOPATH/src/github.com/openconfig/ygot/generator/generator.go
+#YANG_CONVERTER=$GOPATH/src/github.com/openconfig/ygot/generator/generator.go
 
 # Download OpenConfig models from https://github.com/openconfig/public
 # Download ietf models from https://github.com/openconfig/yang/tree/master/standard/ietf/RFC
 # Move downloaded models to a specific folder.
-OC_FOLDER=<add folder path here>
+OC_FOLDER=/mnt/external/git/openconfig
+
+YANG_CONVERTER=$OC_FOLDER/ygot/generator/generator.go
 
 # OpenConfig modules
 YANG_MODELS=$OC_FOLDER/public/release/models
 IETF_MODELS=$OC_FOLDER/yang/standard/ietf/RFC
-AP_TOP_MODULE=$OC_FOLDER/public/release/models/wifi/access-points/openconfig-access-points.yang
+AP_TOP_MODULE=$OC_FOLDER/public/release/models/wifi/openconfig-access-points.yang
 IGNORED_MODULES=openconfig-wifi-phy,openconfig-wifi-mac,openconfig-system,openconfig-extensions,openconfig-inet-types,openconfig-platform
 GASKET_MODULES=../models/gasket.yang
 
 # Output path
 OUTPUT_PACKAGE_NAME=ocstruct
 OUTPUT_FILE_PATH=../../generated/$OUTPUT_PACKAGE_NAME/$OUTPUT_PACKAGE_NAME.go
+
 
 go run $YANG_CONVERTER \
 -path=$YANG_MODELS,$IETF_MODELS,$GASKET_MODULES \

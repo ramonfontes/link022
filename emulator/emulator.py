@@ -97,8 +97,8 @@ class Emulator(object):
     # We add a dummy host to create the eth and wlan interfaces for the
     # Target
     self._net.addHost(DUMMY_NAME)
-    params1 = {'ip': get_ip_spec(hosts_iter.next(), subnet)}
-    params2 = {'ip': get_ip_spec(hosts_iter.next(), subnet)}
+    params1 = {'ip': get_ip_spec('10.0.0.1', subnet)}
+    params2 = {'ip': get_ip_spec('10.0.0.2', subnet)}
     self._net.addLink(TARGET_NAME, CONTROLLER_NAME,
                       params1=params1, params2=params2)
     self._net.addLink(TARGET_NAME, DUMMY_NAME)
