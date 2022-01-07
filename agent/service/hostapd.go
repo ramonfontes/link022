@@ -31,14 +31,13 @@ const (
 `
 	//radiusAttributeSaveConfigTemplate = `radius_auth_access_accept_attr=%s
 //`
-	commonConfigTemplate = `
-interface=%s
-# Driver; nl80211 is used with all Linux mac80211 drivers.
+	commonConfigTemplate = `interface=%s
 driver=nl80211
 hw_mode=%s
 channel=%d
+ssid=%s
 ctrl_interface=/var/run/hostapd
-
+ctrl_interface_group=0
 `
 
 //	bssConfigTemplate = `
