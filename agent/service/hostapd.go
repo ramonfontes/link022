@@ -93,7 +93,7 @@ func configHostapd(apConfig *ocstruct.OpenconfigAccessPoints_AccessPoints_Access
 		radioConfig := apRadio.Config
 		wlanConfigs := wlanWithOpFreq(apConfig, radioConfig.OperatingFrequency)
 
-		// Genearte hostapd configuration.
+		// Generate hostapd configuration.
 		hostapdConfig := hostapdConfigFile(radioConfig, authServerConfigs, wlanConfigs, wlanINTFName, hostname, ctrlInterface, radiusAttribute)
 
 		// Save the hostapd configuration file.
@@ -137,11 +137,11 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 		wlanName := *wlanConfig.Name
 		log.Infof("Adding hostapd configuration for WLAN %v...", wlanName)
 
-		if i > 0 {
-			// Add BSS configuration.
-			bssConfig := fmt.Sprintf(bssConfigTemplate, wlanINTFName, i)
-			hostapdConfig += bssConfig
-		}
+		//if i > 0 {
+		//	// Add BSS configuration.
+		//	bssConfig := fmt.Sprintf(bssConfigTemplate, wlanINTFName, i)
+		//	hostapdConfig += bssConfig
+		//}
 
 		// Add WLAN configuration.
 		wlanBridgeName := getBridgeName(int(*wlanConfig.DefaultVlan))
@@ -151,8 +151,8 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 			wlanStationIsolation = 1
 		}
 
-		hostapdWLANConfig := fmt.Sprintf(wlanConfigTemplate, wlanName, wlanBridgeName, wlanStationIsolation)
-		hostapdConfig += hostapdWLANConfig
+		//hostapdWLANConfig := fmt.Sprintf(wlanConfigTemplate, wlanName, wlanBridgeName, wlanStationIsolation)
+		//hostapdConfig += hostapdWLANConfig
 
 		// Add AUTH configuration.
 		if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
@@ -162,8 +162,8 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 			radiusServerAddr := *authServerConfig.Address
 			radiusServerPort := *authServerConfig.Radius.Config.AuthPort
 			radiusSecret := *authServerConfig.Radius.Config.SecretKey
-			authConfig := fmt.Sprintf(authConfigTemplate, radiusServerAddr, radiusServerPort, radiusSecret, hostname)
-			hostapdConfig += authConfig
+			//authConfig := fmt.Sprintf(authConfigTemplate, radiusServerAddr, radiusServerPort, radiusSecret, hostname)
+			//hostapdConfig += authConfig
 		}
 		// TODO: Add validation to block WPA2_PERSONAL.
 	}
