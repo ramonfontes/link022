@@ -16,29 +16,20 @@ limitations under the License.
 """Emulator for link022. Refer to the README.md file for instructions.
 """
 
+import os
 import argparse
 import netaddr
 import logging
 
+from mininet.log import setLogLevel, info
+from mininet.term import makeTerm
 import mininet.net
 import mininet.node
 import mininet.cli
 
 
-FLAGS = None
 logging.basicConfig(filename='/tmp/link022_emulator.log', level=logging.INFO)
 logger = logging.getLogger()
-
-
-def set_flags():
-  """Set the global FLAGS."""
-  global FLAGS
-  parser = argparse.ArgumentParser()
-  parser.add_argument(
-      '--target_cmd',
-      help='Command line to start the target.')
-  FLAGS = parser.parse_args()
-
 
 TARGET_NAME = 'target'
 CONTROLLER_NAME = 'ctrlr'
@@ -108,8 +99,14 @@ class Emulator(object):
     self._ctrlr = self._net[CONTROLLER_NAME]
 
     self._net.start()
-    logger.info('Running Link022 target command: %s', FLAGS.target_cmd)
-    self._target_popen = self._target.popen(FLAGS.target_cmd)
+
+    #"../binary/link022_agent -ca=../demo/cert/server/ca.crt -cert=../demo/cert/server/server.crt -key=../demo/cert/server/server.key -eth_intf_name=target-eth1 -wlan_intf_name=target-eth2"
+    makeTerm(self._target, title='agent', cmd="bash -c 'echo \"running agent...\" && ../binary/link022_agent -ca=../demo/cert/tls_cert_key/server/ca.crt -cert=../demo/cert/tls_cert_key/server/server.crt -key=../demo/cert/tls_cert_key/server/server.key -eth_intf_name=target-eth1 -wlan_intf_name=target-eth2;'")
+
+    makeTerm(self._ctrlr, title='set_config',
+             cmd="bash -c 'echo \"running agent...\" && /home/alpha/go/bin/gnmi_set -ca ../demo/cert/tls_cert_key/client/ca.crt -cert ../demo/cert/tls_cert_key/client/client.crt -key ../demo/cert/tls_cert_key/client/client.key -target_name www.example.com -target_addr 10.0.0.1:10162 -replace=/:@../tests/ap_config1.json;'")
+
+    #"/home/alpha/go/bin/gnmi_set -ca ../demo/cert/tls_cert_key/client/ca.crt -cert ../demo/cert/tls_cert_key/client/client.crt -key ../demo/cert/tls_cert_key/client/client.key -target_name www.example.com -target_addr 10.0.0.1:10162 -replace=/:@../tests/ap_config1.json"
 
   def cleanup(self):
     """Clean up emulator."""
@@ -118,10 +115,11 @@ class Emulator(object):
       self._target_popen = None
     if self._net:
       self._net.stop()
+      os.system('pkill -9 -f \"xterm -title\"')
       logger.info('Emulator cleaned up.')
 
 if __name__ == '__main__':
-  set_flags()
+  setLogLevel('debug')
   emulator = Emulator()
   try:
     emulator.start()
