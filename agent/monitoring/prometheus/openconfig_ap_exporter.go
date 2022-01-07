@@ -36,7 +36,7 @@ import (
 
 	"github.com/google/gnxi/utils/credentials"
 	"github.com/google/gnxi/utils/xpath"
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 
 	gpb "github.com/openconfig/gnmi/proto/gnmi"
 	cpb "google.golang.org/genproto/googleapis/rpc/code"

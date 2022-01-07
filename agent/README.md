@@ -35,7 +35,7 @@ sudo apt-get install udhcpc bridge-utils hostapd git
 ### Download Link022 agent
 ```
 export GOPATH=$HOME/go
-go get github.com/google/link022/agent
+go get github.com/ramonfontes/link022/agent
 ```
 
 ### Download certificates

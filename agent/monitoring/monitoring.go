@@ -28,9 +28,9 @@ import (
 
 	log "github.com/golang/glog"
 	"github.com/google/gnxi/utils/xpath"
-	"github.com/google/link022/agent/context"
-	"github.com/google/link022/agent/gnmi"
-	"github.com/google/link022/agent/syscmd"
+	"github.com/ramonfontes/link022/agent/context"
+	"github.com/ramonfontes/link022/agent/gnmi"
+	"github.com/ramonfontes/link022/agent/syscmd"
 )
 
 const (

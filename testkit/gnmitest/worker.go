@@ -25,8 +25,8 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/google/gnxi/utils/xpath"
-	"github.com/google/link022/testkit/common"
-	"github.com/google/link022/testkit/util/gnmiutil"
+	"github.com/ramonfontes/link022/testkit/common"
+	"github.com/ramonfontes/link022/testkit/util/gnmiutil"
 
 	log "github.com/golang/glog"
 	pb "github.com/openconfig/gnmi/proto/gnmi"

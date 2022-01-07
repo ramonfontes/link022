@@ -18,9 +18,9 @@ package service
 
 import (
 	log "github.com/golang/glog"
-	"github.com/google/link022/agent/syscmd"
-	"github.com/google/link022/agent/util/ocutil"
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/agent/syscmd"
+	"github.com/ramonfontes/link022/agent/util/ocutil"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 )
 
 var (

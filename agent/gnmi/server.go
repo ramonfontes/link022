@@ -26,7 +26,7 @@ import (
 	"strings"
 
 	"github.com/google/gnxi/gnmi"
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 
 	log "github.com/golang/glog"
 	pb "github.com/openconfig/gnmi/proto/gnmi"

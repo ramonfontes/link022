@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/google/gnxi/gnmi"
-	"github.com/google/link022/generated/ocstruct"
-	"github.com/google/link022/testkit/common"
+	"github.com/ramonfontes/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/testkit/common"
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 	"github.com/openconfig/ygot/ygot"
 	"google.golang.org/grpc"

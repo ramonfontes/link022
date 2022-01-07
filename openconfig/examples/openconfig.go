@@ -21,8 +21,8 @@ import (
 	"flag"
 
 	log "github.com/golang/glog"
-	"github.com/google/link022/agent/util/mock"
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/agent/util/mock"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 	"github.com/openconfig/ygot/ygot"
 )
 

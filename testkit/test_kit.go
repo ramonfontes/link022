@@ -30,8 +30,8 @@ import (
 
 	"github.com/google/gnxi/utils/credentials"
 
-	"github.com/google/link022/testkit/common"
-	"github.com/google/link022/testkit/gnmitest"
+	"github.com/ramonfontes/link022/testkit/common"
+	"github.com/ramonfontes/link022/testkit/gnmitest"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )

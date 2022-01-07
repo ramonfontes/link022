@@ -20,11 +20,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/google/link022/agent/context"
-	"github.com/google/link022/agent/service"
-	"github.com/google/link022/agent/syscmd"
-	"github.com/google/link022/agent/util/ocutil"
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/agent/context"
+	"github.com/ramonfontes/link022/agent/service"
+	"github.com/ramonfontes/link022/agent/syscmd"
+	"github.com/ramonfontes/link022/agent/util/ocutil"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 	"github.com/openconfig/ygot/ygot"
 
 	log "github.com/golang/glog"
