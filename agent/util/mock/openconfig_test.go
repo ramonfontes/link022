@@ -18,7 +18,7 @@ package mock
 import (
 	"testing"
 
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 	"github.com/openconfig/ygot/ygot"
 )
 

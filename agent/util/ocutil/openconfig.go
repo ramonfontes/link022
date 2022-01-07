@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"sort"
 
-	"github.com/google/link022/generated/ocstruct"
+	"github.com/ramonfontes/link022/generated/ocstruct"
 )
 
 // FindAPConfig finds the configuration of the AP with a specific hostname.
