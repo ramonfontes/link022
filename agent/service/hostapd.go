@@ -29,8 +29,8 @@ import (
 const (
 	ctrlInterfaceConfigTemplate = `ctrl_interface=%s
 `
-	radiusAttributeSaveConfigTemplate = `radius_auth_access_accept_attr=%s
-`
+	//radiusAttributeSaveConfigTemplate = `radius_auth_access_accept_attr=%s
+//`
 	commonConfigTemplate = `
 interface=%s
 # Driver; nl80211 is used with all Linux mac80211 drivers.
@@ -41,19 +41,19 @@ ctrl_interface=/var/run/hostapd
 
 `
 
-	bssConfigTemplate = `
-# bssid for multiple wlans, the format is like "wlan0_1"
-# For the first wlan, there should be no bssid field, otherwise hostapd
-# will fail to start.
-bss=%s_%d
-`
+//	bssConfigTemplate = `
+//# bssid for multiple wlans, the format is like "wlan0_1"
+//# For the first wlan, there should be no bssid field, otherwise hostapd
+//# will fail to start.
+//bss=%s_%d
+//`
 
-	wlanConfigTemplate = `ssid=%s
-bridge=%s
-ap_isolate=%d
-`
+//	wlanConfigTemplate = `ssid=%s
+//bridge=%s
+//ap_isolate=%d
+//`
 
-	authConfigTemplate = `ieee8021x=1
+/*	authConfigTemplate = `ieee8021x=1
 auth_algs=1
 wpa=2
 rsn_pairwise=CCMP
@@ -63,7 +63,7 @@ auth_server_addr=%s
 auth_server_port=%d
 auth_server_shared_secret=%s
 nas_identifier=%s
-`
+`*/
 )
 
 // configHostapd configures the hostapd program on this device based on the given AP configuration.
@@ -126,9 +126,9 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 	if len(ctrlInterface) != 0 {
 		commonConfig += fmt.Sprintf(ctrlInterfaceConfigTemplate, ctrlInterface)
 	}
-	if len(radiusAttribute) != 0 {
-		commonConfig += fmt.Sprintf(radiusAttributeSaveConfigTemplate, radiusAttribute)
-	}
+	//if len(radiusAttribute) != 0 {
+	//	commonConfig += fmt.Sprintf(radiusAttributeSaveConfigTemplate, radiusAttribute)
+	//}
 
 	hostapdConfig += commonConfig
 
