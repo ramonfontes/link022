@@ -133,7 +133,7 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 	hostapdConfig += commonConfig
 
 	// Generate wlan configuration.
-	for i, wlanConfig := range wlanConfigs {
+	/*for i, wlanConfig := range wlanConfigs {
 		wlanName := *wlanConfig.Name
 		log.Infof("Adding hostapd configuration for WLAN %v...", wlanName)
 
@@ -155,18 +155,18 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 		//hostapdConfig += hostapdWLANConfig
 
 		// Add AUTH configuration.
-		if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
+		//if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
 			// Add radius configuration.
-			authServerConfig := authServerConfigs[wlanName]
+			//authServerConfig := authServerConfigs[wlanName]
 			// TODO: Add validation to ensure authServerConfig exists.
-			radiusServerAddr := *authServerConfig.Address
-			radiusServerPort := *authServerConfig.Radius.Config.AuthPort
-			radiusSecret := *authServerConfig.Radius.Config.SecretKey
+			//radiusServerAddr := *authServerConfig.Address
+			//radiusServerPort := *authServerConfig.Radius.Config.AuthPort
+			//radiusSecret := *authServerConfig.Radius.Config.SecretKey
 			//authConfig := fmt.Sprintf(authConfigTemplate, radiusServerAddr, radiusServerPort, radiusSecret, hostname)
 			//hostapdConfig += authConfig
-		}
+		//}
 		// TODO: Add validation to block WPA2_PERSONAL.
-	}
+	}*/
 
 	log.Info("Generated hostapd configuration.")
 	return hostapdConfig
