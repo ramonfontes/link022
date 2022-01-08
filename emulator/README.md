@@ -4,7 +4,7 @@ This doc contains steps to run a Link022 emulator.
 The emulator builds a local testing environment with Link022 agent running inside a mininet node.
 
 ### Prerequisites
-* Mininet-WiFi: (https://github.com/intrig-unicamp/mininet-wifi)[https://github.com/intrig-unicamp/mininet-wifi]
+* Mininet-WiFi: [https://github.com/intrig-unicamp/mininet-wifi](https://github.com/intrig-unicamp/mininet-wifi)
 
 ### 1. Setup environment
 The setup needs some additional packages.
@@ -14,6 +14,8 @@ go get github.com/openconfig/ygot/experimental/ygotutils
 ```
 
 ### 2. Compile Link022 agent
+Download the agent by following [these instructions](https://github.com/ramonfontes/link022/tree/master/agent).
+
 Run the [build script](../build.sh) to compile the Link022 agent.
 It stores output binary file in the "binary" folder.
 ```
