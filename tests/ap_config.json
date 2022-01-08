@@ -1,122 +1,121 @@
 {
-  "openconfig-access-points:hostname":"link022-pi-ap",
-  "openconfig-access-points:system":{
-    "aaa":{
-      "server-groups":{
-        "server-group":[
-          {
-            "servers":{
-              "server":[
-                {
-                  "address":"192.168.11.1",
-                  "config":{
-                    "address":"192.168.11.1",
-                    "timeout":5,
-                    "name":"radius-server"
-                  },
-                  "radius":{
-                    "config":{
-                      "auth-port":1812,
-                      "secret-key":"radiuspwd"
-                    }
-                  }
-                }
-              ]
-            },
-            "name":"freeradius",
-            "config":{
-              "name":"freeradius",
-              "type":"openconfig-aaa-radius:RADIUS"
-            }
-          }
-        ]
-      }
-    }
-  },
-  "openconfig-access-points:radios":{
-    "radio":[
+  "openconfig-ap-manager:provision-aps": {
+    "provision-ap": [
       {
-        "config":{
-          "channel":157,
-          "channel-width":40,
-          "dca":false,
-          "enabled":true,
-          "id":0,
-          "operating-frequency":"openconfig-wifi-types:FREQ_5GHZ",
-          "scanning":false,
-          "scanning-defer-traffic":true,
-          "transmit-power":9
-        },
-        "id":0
-      },
-      {
-        "config":{
-          "operating-frequency":"openconfig-wifi-types:FREQ_2GHZ",
-          "channel-width":20,
-          "dca":false,
-          "enabled":true,
-          "dtp":false,
-          "transmit-power":3,
-          "id":1,
-          "channel":6
-        },
-        "id":1
+        "mac": "52:dc:f6:4c:8b:30",
+       "config": {
+          "hostname": "alpha-Inspiron-5480",
+          "mac": "52:dc:f6:4c:8b:30"
+        }
       }
     ]
   },
-  "openconfig-access-points:ssids":{
-    "ssid":[
+  "openconfig-access-points:access-points": {
+    "access-point": [
       {
-        "config":{
-          "qbss-load":true,
-          "dva":true,
-          "station-isolation":true,
-          "operating-frequency":"openconfig-wifi-types:FREQ_2GHZ",
-          "name":"Auth-Link022",
-          "default-vlan":300,
-          "dot11k":true,
-          "supported-data-rates":[
-            "openconfig-wifi-types:RATE_36MB",
-            "openconfig-wifi-types:RATE_48MB",
-            "openconfig-wifi-types:RATE_54MB"
-          ],
-          "basic-data-rates":[
-            "openconfig-wifi-types:RATE_36MB",
-            "openconfig-wifi-types:RATE_48MB",
-            "openconfig-wifi-types:RATE_54MB"
-          ],
-          "broadcast-filter":true,
-          "enabled":true,
-          "server-group":"freeradius",
-          "csa":true,
-          "hidden":false,
-          "opmode":"WPA2_ENTERPRISE"
+        "hostname": "alpha-Inspiron-5480",
+        "config": {
+          "hostname": "alpha-Inspiron-5480"
         },
-        "name":"Auth-Link022"
-      },
-      {
-        "config":{
-          "advertise-apname":true,
-          "basic-data-rates":[
-            "openconfig-wifi-types:RATE_11MB",
-            "openconfig-wifi-types:RATE_24MB"
-          ],
-          "broadcast-filter":true,
-          "csa":false,
-          "dot11k":false,
-          "dva":false,
-          "enabled":true,
-          "hidden":false,
-          "name":"Guest-Link022",
-          "operating-frequency":"openconfig-wifi-types:FREQ_2GHZ",
-          "opmode":"OPEN",
-          "supported-data-rates":[
-            "openconfig-wifi-types:RATE_11MB",
-            "openconfig-wifi-types:RATE_24MB"
-          ],
-          "default-vlan":200
+        "system": {
+          "aaa": {
+            "server-groups": {
+              "server-group": [
+                {
+                  "servers": {
+                    "server": [
+                      {
+                        "address": "192.168.11.1",
+                        "config": {
+                          "address": "192.168.11.1",
+                          "timeout": 5,
+                          "name": "radius-server"
+                        },
+                        "radius": {
+                          "config": {
+                            "auth-port": 1812,
+                            "secret-key": "radiuspwd"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "name": "freeradius",
+                  "config": {
+                    "name": "freeradius",
+                    "type": "openconfig-aaa-radius:RADIUS"
+                  }
+                }
+              ]
+            }
+          }
         },
-        "name":"Guest-Link022"
+        "radios": {
+          "radio": [
+            {
+              "config": {
+                "operating-frequency": "openconfig-wifi-types:FREQ_2GHZ",
+                "channel-width": 20,
+                "dca": false,
+                "dtp": false,
+                "transmit-power": 3,
+                "id": 1,
+                "scanning": false,
+                "channel": 6
+              },
+              "id": 1
+            }
+          ]
+        },
+        "ssids": {
+          "ssid": [
+            {
+              "config": {
+                "qbss-load": true,
+                "dva": true,
+                "gtk-timeout": 3600,
+                "station-isolation": true,
+                "multicast-filter": true,
+                "ptk-timeout": 28800,
+                "operating-frequency": "openconfig-wifi-types:FREQ_2_5_GHZ",
+                "name": "Auth-Link022",
+                "default-vlan": 300,
+                "advertise-apname": true,
+                "ipv6-ndp-filter-timer": 300,
+                "dot11k": true,
+                "broadcast-filter": true,
+                "enabled": true,
+                "server-group": "freeradius",
+                "csa": true,
+                "dhcp-required": false,
+                "hidden": false,
+                "opmode": "WPA2_ENTERPRISE",
+                "ipv6-ndp-filter": true
+              },
+              "name": "Auth-Link022"
+            },
+            {
+              "config": {
+                "advertise-apname": true,
+                "broadcast-filter": true,
+                "csa": false,
+                "dhcp-required": true,
+                "dot11k": false,
+                "dva": false,
+                "enabled": true,
+                "gtk-timeout": 1000,
+                "hidden": false,
+                "multicast-filter": false,
+                "name": "Guest-Link022",
+                "operating-frequency": "openconfig-wifi-types:FREQ_2_5_GHZ",
+                "opmode": "OPEN",
+                "ptk-timeout": 1000,
+                "default-vlan": 200
+              },
+              "name": "Guest-Link022"
+            }
+          ]
+        }
       }
     ]
   }

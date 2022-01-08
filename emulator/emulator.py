@@ -1,29 +1,16 @@
-""" Copyright 2018 Google Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 """
+Emulation with support for OpenConfig/WiFi. Refer to the README.md file for instructions.
 
-"""Emulator for link022. Refer to the README.md file for instructions.
+@author: Ramon Fontes
+@Github: https://github.com/ramonfontes/link022
+
 """
 
 import os
-import argparse
-import netaddr
 import logging
 
 from mininet.log import setLogLevel, info
 from mininet.term import makeTerm
-import mininet.node
 
 from mn_wifi.cli import CLI
 from mn_wifi.net import Mininet_wifi
@@ -32,33 +19,37 @@ logging.basicConfig(filename='/tmp/link022_emulator.log', level=logging.INFO)
 logger = logging.getLogger()
 
 
-def start_topo():
-    """Create an empty network and add nodes to it.
-    """
+def topology():
 
-    net = Mininet_wifi(controller=None)
+    net = Mininet_wifi()
 
-    target = net.addStation('target', ip='192.168.0.1/24')
-    ctrlr = net.addHost('ctrlr', ip='10.0.0.2/8')
+    info("*** Creating nodes\n")
+    # Creating our AP - This can be replaced by addAccessPoint() running at a particular NS
+    # IP address is required!
+    ap1 = net.addStation('ap1', ip='192.168.0.1/24')
+    # This station is not mandatory but we can use it to validate ou AP
+    net.addStation('sta1', ip='192.168.0.2/24')
+    # Creating our controller that will be used with gnmi
+    c1 = net.addHost('c1', ip='10.0.0.2/8')
 
     info("*** Configuring wifi nodes\n")
     net.configureWifiNodes()
 
     info("*** Adding Link\n")
-    target.setMasterMode(intf='target-wlan0', ssid='ap1-ssid', channel='1', mode='n')
-    net.addLink(target, ctrlr)
+    ap1.setMasterMode(intf='ap1-wlan0', ssid='ap1-ssid', channel='1', mode='n')
+    net.addLink(ap1, c1)
 
     info("*** Starting network\n")
     net.build()
 
-    target.cmd('ifconfig target-eth1 10.0.0.1')
-    #"../binary/link022_agent -ca=../demo/cert/server/ca.crt -cert=../demo/cert/server/server.crt -key=../demo/cert/server/server.key -eth_intf_name=target-eth1 -wlan_intf_name=target-eth2"
-    makeTerm(target, title='agent', cmd="bash -c 'echo \"running agent...\" && ../binary/link022_agent -ca=../demo/cert/tls_cert_key/server/ca.crt -cert=../demo/cert/tls_cert_key/server/server.crt -key=../demo/cert/tls_cert_key/server/server.key -eth_intf_name=target-eth1 -wlan_intf_name=target-wlan0;'")
-
-    #makeTerm(self._ctrlr, title='set_config',
-     #        cmd="bash -c '/home/alpha/go/bin/gnmi_set -ca ../demo/cert/tls_cert_key/client/ca.crt -cert ../demo/cert/tls_cert_key/client/client.crt -key ../demo/cert/tls_cert_key/client/client.key -target_name www.example.com -target_addr 10.0.0.1:10162 -replace=/:@../tests/ap_config1.json;'")
-
-    #"/home/alpha/go/bin/gnmi_set -ca ../demo/cert/tls_cert_key/client/ca.crt -cert ../demo/cert/tls_cert_key/client/client.crt -key ../demo/cert/tls_cert_key/client/client.key -target_name www.example.com -target_addr 10.0.0.1:10162 -replace=/:@../tests/ap_config1.json"
+    # Configuring IP address for the interface attached to c1
+    ap1.cmd('ifconfig ap1-eth1 10.0.0.1')
+    makeTerm(ap1, title='agent', cmd="bash -c 'echo \"running agent...\" "
+                                     "&& ../binary/link022_agent -ca=../demo/cert/tls_cert_key/server/ca.crt "
+                                     "-cert=../demo/cert/tls_cert_key/server/server.crt -key=../demo/cert/"
+                                     "tls_cert_key/server/server.key -eth_intf_name=ap1-eth1 "
+                                     "-wlan_intf_name=ap1-wlan0;'")
+    makeTerm(c1, title='ctrl')
 
     info("*** Running CLI\n")
     CLI(net)
@@ -71,4 +62,4 @@ def start_topo():
 
 if __name__ == '__main__':
     setLogLevel('info')
-    start_topo()
+    topology()
