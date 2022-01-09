@@ -17,39 +17,6 @@
         "config": {
           "hostname": "alpha-Inspiron-5480"
         },
-        "system": {
-          "aaa": {
-            "server-groups": {
-              "server-group": [
-                {
-                  "servers": {
-                    "server": [
-                      {
-                        "address": "192.168.11.1",
-                        "config": {
-                          "address": "192.168.11.1",
-                          "timeout": 5,
-                          "name": "radius-server"
-                        },
-                        "radius": {
-                          "config": {
-                            "auth-port": 1812,
-                            "secret-key": "radiuspwd"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  "name": "freeradius",
-                  "config": {
-                    "name": "freeradius",
-                    "type": "openconfig-aaa-radius:RADIUS"
-                  }
-                }
-              ]
-            }
-          }
-        },
         "radios": {
           "radio": [
             {
@@ -61,7 +28,7 @@
                 "transmit-power": 3,
                 "id": 1,
                 "scanning": false,
-                "channel": 6
+                "channel": 1
               },
               "id": 1
             }
@@ -85,34 +52,13 @@
                 "dot11k": true,
                 "broadcast-filter": true,
                 "enabled": true,
-                "server-group": "freeradius",
                 "csa": true,
                 "dhcp-required": false,
                 "hidden": false,
-                "opmode": "WPA2_ENTERPRISE",
+                "opmode": "OPEN",
                 "ipv6-ndp-filter": true
               },
               "name": "Auth-Link022"
-            },
-            {
-              "config": {
-                "advertise-apname": true,
-                "broadcast-filter": true,
-                "csa": false,
-                "dhcp-required": true,
-                "dot11k": false,
-                "dva": false,
-                "enabled": true,
-                "gtk-timeout": 1000,
-                "hidden": false,
-                "multicast-filter": false,
-                "name": "Guest-Link022",
-                "operating-frequency": "openconfig-wifi-types:FREQ_2_5_GHZ",
-                "opmode": "OPEN",
-                "ptk-timeout": 1000,
-                "default-vlan": 200
-              },
-              "name": "Guest-Link022"
             }
           ]
         }

@@ -29,8 +29,8 @@ import (
 const (
 	ctrlInterfaceConfigTemplate = `ctrl_interface=%s
 `
-	//radiusAttributeSaveConfigTemplate = `radius_auth_access_accept_attr=%s
-//`
+	radiusAttributeSaveConfigTemplate = `radius_auth_access_accept_attr=%s
+`
 	commonConfigTemplate = `interface=%s
 driver=nl80211
 hw_mode=%s
@@ -39,19 +39,19 @@ ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
 `
 
-//	bssConfigTemplate = `
-//# bssid for multiple wlans, the format is like "wlan0_1"
-//# For the first wlan, there should be no bssid field, otherwise hostapd
-//# will fail to start.
-//bss=%s_%d
-//`
+	bssConfigTemplate = `
+# bssid for multiple wlans, the format is like "wlan0_1"
+# For the first wlan, there should be no bssid field, otherwise hostapd
+# will fail to start.
+bss=%s_%d
+`
 
 	wlanConfigTemplate = `ssid=%s
 bridge=%s
 ap_isolate=%d
 `
 
-/*	authConfigTemplate = `ieee8021x=1
+	authConfigTemplate = `ieee8021x=1
 auth_algs=1
 wpa=2
 rsn_pairwise=CCMP
@@ -61,7 +61,7 @@ auth_server_addr=%s
 auth_server_port=%d
 auth_server_shared_secret=%s
 nas_identifier=%s
-`*/
+`
 )
 
 // configHostapd configures the hostapd program on this device based on the given AP configuration.
@@ -124,9 +124,9 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 	if len(ctrlInterface) != 0 {
 		commonConfig += fmt.Sprintf(ctrlInterfaceConfigTemplate, ctrlInterface)
 	}
-	//if len(radiusAttribute) != 0 {
-	//	commonConfig += fmt.Sprintf(radiusAttributeSaveConfigTemplate, radiusAttribute)
-	//}
+	if len(radiusAttribute) != 0 {
+		commonConfig += fmt.Sprintf(radiusAttributeSaveConfigTemplate, radiusAttribute)
+	}
 
 	hostapdConfig += commonConfig
 
@@ -137,8 +137,8 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 
 		if i > 0 {
 			// Add BSS configuration.
-		//	bssConfig := fmt.Sprintf(bssConfigTemplate, wlanINTFName, i)
-		//	hostapdConfig += bssConfig
+			bssConfig := fmt.Sprintf(bssConfigTemplate, wlanINTFName, i)
+			hostapdConfig += bssConfig
 		}
 
 		// Add WLAN configuration.
@@ -154,16 +154,16 @@ func hostapdConfigFile(radioConfig *ocstruct.OpenconfigAccessPoints_AccessPoints
 		hostapdConfig += hostapdWLANConfig
 
 		// Add AUTH configuration.
-		//if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
+		if wlanConfig.Opmode == ocstruct.OpenconfigAccessPoints_AccessPoints_AccessPoint_Ssids_Ssid_Config_Opmode_WPA2_ENTERPRISE {
 			// Add radius configuration.
-			//authServerConfig := authServerConfigs[wlanName]
+			authServerConfig := authServerConfigs[wlanName]
 			// TODO: Add validation to ensure authServerConfig exists.
-			//radiusServerAddr := *authServerConfig.Address
-			//radiusServerPort := *authServerConfig.Radius.Config.AuthPort
-			//radiusSecret := *authServerConfig.Radius.Config.SecretKey
-			//authConfig := fmt.Sprintf(authConfigTemplate, radiusServerAddr, radiusServerPort, radiusSecret, hostname)
-			//hostapdConfig += authConfig
-		//}
+			radiusServerAddr := *authServerConfig.Address
+			radiusServerPort := *authServerConfig.Radius.Config.AuthPort
+			radiusSecret := *authServerConfig.Radius.Config.SecretKey
+			authConfig := fmt.Sprintf(authConfigTemplate, radiusServerAddr, radiusServerPort, radiusSecret, hostname)
+			hostapdConfig += authConfig
+		}
 		// TODO: Add validation to block WPA2_PERSONAL.
 	}
 
