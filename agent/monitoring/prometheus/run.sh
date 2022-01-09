@@ -1,0 +1,1 @@
+./exposition_server -ca ../../../demo/cert/tls_cert_key/client/ca.crt -cert ../../../demo/cert/tls_cert_key/client/client.crt -key ../../../demo/cert/tls_cert_key/client/client.key -target_name www.example.com -target_addr 10.0.0.1:10162 -listen_addr 10.0.0.4:8080

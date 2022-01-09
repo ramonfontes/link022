@@ -222,7 +222,7 @@ func typedValueToScalar(tv *gpb.TypedValue) (interface{}, error) {
 // jsonIETFtoGNMINotification convert JSON_IETF encoded data to gNMI notifications.
 // nodePath is full path of this node (from root).
 func jsonIETFtoGNMINotifications(nodeJSON []byte, timeStamp int64, nodePath *gpb.Path) ([]*gpb.Notification, error) {
-	nodeTemp, _, stat := ytypes.GetOrCreateNode(ocstruct.SchemaTree["Device"], reflect.Interface, nodePath)
+	nodeTemp, _, stat := ytypes.GetOrCreateNode(ocstruct.SchemaTree["Device"], &ocstruct.Device{}, nodePath)
 	if stat != nil {
 		return nil, fmt.Errorf("cannot create empty node with path %v: %v", nodePath, stat)
 	}
@@ -241,7 +241,7 @@ func jsonIETFtoGNMINotifications(nodeJSON []byte, timeStamp int64, nodePath *gpb
 		PathElemPrefix: nodePath.GetElem(),
 	})
 	if err != nil {
-		return nil, fmt.Errorf("error in serializzing GoStruct to notiffications: %v", err)
+		return nil, fmt.Errorf("error in serializing GoStruct to notifications: %v", err)
 	}
 	return noti, nil
 }
