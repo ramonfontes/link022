@@ -10,7 +10,7 @@ The emulator builds a local testing environment with Link022 agent running insid
 The setup needs some additional packages.
 ```
 go get github.com/openconfig/goyang/pkg/yang
-go get github.com/openconfig/ygot/experimental/ygotutils
+go get github.com/openconfig/ygot/util
 ```
 
 ### 2. Compile Link022 agent
