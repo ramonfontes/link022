@@ -25,10 +25,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/openconfig/ygot/experimental/ygotutils"
+	//"github.com/openconfig/ygot/util"
 
 	"github.com/openconfig/gnmi/value"
 	"github.com/openconfig/ygot/ygot"
+	"github.com/openconfig/ygot/ytypes"
 
 	log "github.com/golang/glog"
 	"github.com/prometheus/client_golang/prometheus"
@@ -39,7 +40,7 @@ import (
 	"github.com/ramonfontes/link022/generated/ocstruct"
 
 	gpb "github.com/openconfig/gnmi/proto/gnmi"
-	cpb "google.golang.org/genproto/googleapis/rpc/code"
+	//cpb "google.golang.org/genproto/googleapis/rpc/code"
 )
 
 const (
@@ -71,8 +72,8 @@ func (s *TargetState) currentState() *gpb.Notification {
 }
 
 //monitoringAPStats
-func monitoringAPStats(ctx context.Context, targetAddress string, targetName string, targetState *TargetState) {
-	opts := credentials.ClientCredentials(targetName)
+func monitoringAPStats(ctx context.Context, targetAddress string, targetState *TargetState) {
+	opts := credentials.ClientCredentials()
 	conn, err := grpc.Dial(targetAddress, opts...)
 	if err != nil {
 		log.Errorf("Dialing to %q failed: %v", targetAddress, err)
@@ -217,11 +218,12 @@ func typedValueToScalar(tv *gpb.TypedValue) (interface{}, error) {
 	return i, nil
 }
 
+
 // jsonIETFtoGNMINotification convert JSON_IETF encoded data to gNMI notifications.
 // nodePath is full path of this node (from root).
 func jsonIETFtoGNMINotifications(nodeJSON []byte, timeStamp int64, nodePath *gpb.Path) ([]*gpb.Notification, error) {
-	nodeTemp, stat := ygotutils.NewNode(reflect.TypeOf((*ocstruct.Device)(nil)), nodePath)
-	if stat.GetCode() != int32(cpb.Code_OK) {
+	nodeTemp, _, stat := ytypes.GetOrCreateNode(ocstruct.SchemaTree["Device"], reflect.Interface, nodePath)
+	if stat != nil {
 		return nil, fmt.Errorf("cannot create empty node with path %v: %v", nodePath, stat)
 	}
 	nodeStruct, ok := nodeTemp.(ygot.ValidatedGoStruct)
