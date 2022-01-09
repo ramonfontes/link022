@@ -47,7 +47,6 @@ bss=%s_%d
 `
 
 	wlanConfigTemplate = `ssid=%s
-bridge=%s
 ap_isolate=%d
 `
 
