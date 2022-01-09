@@ -8,9 +8,6 @@ Follow steps below to set up environment and start exposition server
 
 ### Prerequisites
 
-Download entire Link022 repository.  
-Install golang 1.10+ (get it from: https://golang.org/doc/install#install)  
-Install dependencies:  
 Change directory in terminal to this folder, then run below command.
 
 ```
@@ -25,32 +22,15 @@ go build exposition_server.go openconfig_ap_exporter.go
 
 This command will generate binary file named exposition_server.  
 
-### Start Exporter
-Run the exporter binary. It takes three categories of input parameters:  
+Note: The default location of exporter log file is  `/tmp/exposition_server.INFO`
 
-1. gNMI client certs config:
-    * ca: CA certificate file
-    * cert: Certificate file
-    * key: Private key file
-2. gNMI target config:
-    * target_addr: the target address in the format of host:port
-    * target_name: the target name for verifing the hostname returned by TLS handshake
-3. Exposition server config
-    * listen_addr: the address for server to listen HTTP requests. The HTTP resource for scraping is /metrics.
+## Running Mininet-WiFi
 
-Here is one example:
+Go to [/emulator](https://github.com/ramonfontes/link022/tree/master/emulator) and run `emulator_monitoring.py`:
 
 ```
-./exposition_server \
--ca ../../../demo/cert/client/ca.crt \
--cert ../../../demo/cert/client/client.crt \
--key ../../../demo/cert/client/client.key \
--target_name www.example.com \
--target_addr 10.0.0.1:8080 \
--listen_addr 127.0.0.1:8080
+sudo python emulator_monitoring.py
 ```
-
-Note: The default location of exporter log file is "/tmp/exposition_server.INFO"
 
 ## Monitoring In Prometheus
 
@@ -62,7 +42,6 @@ Download [Prometheus](https://prometheus.io/download/). Follow official Promethe
 
 ### Configuring Prometheus to monitor AP
 
-If exposition server is listening on 127.0.0.1:8080  
 Save the following basic Prometheus configuration as a file named prometheus.yml
 
 ```
@@ -71,9 +50,9 @@ global:
 
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'link022-pi-ap'
+  - job_name: 'link022'
     static_configs:
-      - targets: ['127.0.0.1:8080']
+      - targets: ['10.0.0.4:8080']
 ```
 
 ### Start Prometheus
