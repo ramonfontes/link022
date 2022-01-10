@@ -15,6 +15,11 @@ OpenConfig models.
 *  See [gNMI Protocol documentation](https://github.com/openconfig/reference/tree/master/rpc/gnmi).
 *  See [Openconfig documentation](http://www.openconfig.net/).
 
+**This repository is a fork of the [original link022 project](https://github.com/google/link022). So 
+many changes were made here because the original project does not work with the most recent versions of Go.
+With this repository you should be able to reproduce the [emulator](https://github.com/ramonfontes/link022/tree/master/emulator) component 
+as well as the [monitoring agent](https://github.com/ramonfontes/link022/tree/master/agent/monitoring).**
+
 ## Get Started
 This repository contains following components.
 
