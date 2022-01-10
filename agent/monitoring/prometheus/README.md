@@ -38,7 +38,14 @@ Follow steps below to set up Prometheus and monitoring AP status.
 
 ### Prometheus Getting Started
 
-Download [Prometheus](https://prometheus.io/download/). Follow official Prometheus [tutorial](https://prometheus.io/docs/prometheus/latest/getting_started/) to learn how to configure and start it.
+You can get and run prometheus with docker by running the command below: 
+
+```
+docker run \
+    -p 9090:9090 \
+    -v {link022_dir}/agent/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
+    prom/prometheus
+```
 
 ### Configuring Prometheus to monitor AP
 
@@ -52,7 +59,8 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'link022'
     static_configs:
-      - targets: ['10.0.0.4:8080']
+      # 10.0.0.4 is the IP address of wan0 node in Mininet-WiFi
+      - targets: ['10.0.0.4:8080'] 
 ```
 
 ### Start Prometheus
